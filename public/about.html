@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서비스 소개 - KEEPON</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%); min-height: 100vh; padding: 0; color: #e2e8f0;">
+    <div class="about-wrapper">
+    <div class="about-container">
+        <!-- 헤더 -->
+        <header class="header">
+            <div class="header-left">
+                <button id="backBtn" class="back-button" title="뒤로 가기">
+                    ←
+                </button>
+                <h1>🎁 KEEPON</h1>
+            </div>
+            <div class="header-info">
+                <a href="dashboard.html" class="btn-primary">내 지갑</a>
+                <a href="login.html" class="btn-secondary">로그인</a>
+            </div>
+        </header>
+
+        <!-- 히어로 섹션 -->
+        <section class="hero-section scroll-reveal">
+            <div class="hero-content">
+                <div class="hero-title-wrapper">
+                    <span class="hero-title-icon">🎁</span>
+                    <h2 class="hero-title">Keep your gifts on time.</h2>
+                </div>
+                <p class="hero-subtitle">❤️ 가족이 함께 쓰는 선물 지갑</p>
+                <p style="color: #999; font-size: 18px; margin-top: 15px; line-height: 1.8;">
+                    흩어진 기프트콘을 한눈에 정리하고,<br>
+                    유효기간이 임박하면 잊지 않게 알려줍니다
+                </p>
+                <div class="hero-badge-group">
+                    <span class="hero-badge">
+                        <span class="badge-icon">🎁</span>
+                        <span class="badge-text">통합 관리</span>
+                    </span>
+                    <span class="hero-badge">
+                        <span class="badge-icon">⏰</span>
+                        <span class="badge-text">자동 알림</span>
+                    </span>
+                    <span class="hero-badge">
+                        <span class="badge-icon">👨‍👩‍👧</span>
+                        <span class="badge-text">가족 공유</span>
+                    </span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-animation">
+                    <div class="icon-circle floating-icon">
+                        <div class="icon-content">🎁</div>
+                    </div>
+                    <div class="icon-circle floating-icon delayed-1">
+                        <div class="icon-content">⏰</div>
+                    </div>
+                    <div class="icon-circle floating-icon delayed-2">
+                        <div class="icon-content">👨‍👩‍👧</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 문제 해결 섹션 -->
+        <section class="features-section scroll-reveal">
+            <h3 class="scroll-reveal-up">🎯 해결하는 문제</h3>
+            
+            <div class="feature-list">
+                <div class="feature-card scroll-reveal-up">
+                    <div class="feature-icon">📱</div>
+                    <h4>여러 플랫폼 관리 불편</h4>
+                    <p>카카오톡, 네이버페이, 토스 등 여러 플랫폼에 흩어진 기프트콘을 한 곳에서 통합 관리합니다.</p>
+                </div>
+                
+                <div class="feature-card scroll-reveal-up">
+                    <div class="feature-icon">⏰</div>
+                    <h4>유효기간 낭비</h4>
+                    <p>만료 임박 시 자동 알림으로 놓치지 않고 사용할 수 있습니다.</p>
+                </div>
+                
+                <div class="feature-card scroll-reveal-up">
+                    <div class="feature-icon">👨‍👩‍👧</div>
+                    <h4>가족 간 공유 어려움</h4>
+                    <p>가족 코드(PIN)로 같은 지갑을 공유하여 효율적으로 관리합니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 주요 기능 섹션 -->
+        <section class="features-section scroll-reveal">
+            <h3 class="scroll-reveal-up">✨ 주요 기능</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-item scroll-reveal-up">
+                    <span class="feature-number">01</span>
+                    <h4>통합 관리</h4>
+                    <p>15개 이상의 플랫폼 지원</p>
+                </div>
+                <div class="feature-item scroll-reveal-up">
+                    <span class="feature-number">02</span>
+                    <h4>실시간 알림</h4>
+                    <p>D-3 노랑, D-1 빨강 알림</p>
+                </div>
+                <div class="feature-item scroll-reveal-up">
+                    <span class="feature-number">03</span>
+                    <h4>가족 공유</h4>
+                    <p>가족 코드로 공동 지갑</p>
+                </div>
+                <div class="feature-item scroll-reveal-up">
+                    <span class="feature-number">04</span>
+                    <h4>통계 대시보드</h4>
+                    <p>한눈에 보는 통계</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 서비스 이용 안내 -->
+        <section class="howto-section scroll-reveal">
+            <h3 class="scroll-reveal-up">📖 사용 방법</h3>
+            <ol class="howto-list">
+                <li class="scroll-reveal-up">
+                    <span class="step-number">1</span>
+                    <div>
+                        <h4>가족 코드 생성</h4>
+                        <p>새 가족 지갑 만들기를 클릭하여 6자리 가족 코드를 생성하세요</p>
+                    </div>
+                </li>
+                <li class="scroll-reveal-up">
+                    <span class="step-number">2</span>
+                    <div>
+                        <h4>기프트콘 추가</h4>
+                        <p>기프트콘 추가 버튼으로 플랫폼, 브랜드, 금액, 유효기간을 입력하세요</p>
+                    </div>
+                </li>
+                <li class="scroll-reveal-up">
+                    <span class="step-number">3</span>
+                    <div>
+                        <h4>가족과 공유</h4>
+                        <p>가족 코드를 공유하면 같은 지갑을 함께 사용할 수 있습니다</p>
+                    </div>
+                </li>
+                <li class="scroll-reveal-up">
+                    <span class="step-number">4</span>
+                    <div>
+                        <h4>자동 알림</h4>
+                        <p>유효기간 임박 시 자동으로 알림을 받을 수 있습니다</p>
+                    </div>
+                </li>
+            </ol>
+        </section>
+
+        <!-- 푸터 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <h4>🎁 KEEPON</h4>
+                <p>Made with ❤️ by Team Keepon</p>
+                <div class="footer-links">
+                    <a href="login.html">로그인</a>
+                    <a href="dashboard.html">대시보드</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    </div>
+    <script src="scroll-reveal.js"></script>
+    <script src="about.js"></script>
+</body>
+</html>
+

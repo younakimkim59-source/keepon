@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대시보드 - KEEPON</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-left">
+            <h1>🎁 KEEPON</h1>
+        </div>
+        <div class="header-right">
+            <div class="family-code-section">
+                <div class="code-display">
+                    <span class="code-label">가족 코드:</span>
+                    <strong class="code-value" id="displayFamilyCode">-</strong>
+                    <button id="copyCodeBtn" class="copy-btn" title="코드 복사">📋</button>
+                </div>
+            </div>
+            <div class="header-buttons">
+                <button id="logoutBtn" class="logout-btn">🚪 로그아웃</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 통계 카드 -->
+        <div class="stats">
+            <div class="stat-card">
+                <span class="stat-icon">📦</span>
+                <div>
+                    <div class="stat-value" id="totalGifts">0</div>
+                    <div class="stat-label">전체 기프트콘</div>
+                </div>
+            </div>
+            <div class="stat-card warning">
+                <span class="stat-icon">⏰</span>
+                <div>
+                    <div class="stat-value" id="expiringGifts">0</div>
+                    <div class="stat-label">곧 만료 (D-3)</div>
+                </div>
+            </div>
+            <div class="stat-card info">
+                <span class="stat-icon">🏢</span>
+                <div>
+                    <div class="stat-value" id="totalPlatforms">0</div>
+                    <div class="stat-label">사용 중 플랫폼</div>
+                </div>
+            </div>
+            <div class="stat-card success">
+                <span class="stat-icon">💰</span>
+                <div>
+                    <div class="stat-value" id="totalValue">0</div>
+                    <div class="stat-label">총 금액</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 액션 버튼 -->
+        <div class="actions">
+            <button id="addGiftBtn" class="btn-primary">
+                <span class="btn-icon">➕</span>
+                기프트콘 추가
+            </button>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 브랜드 또는 상품명 검색...">
+            </div>
+            <div class="filter-section">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">전체</button>
+                    <button class="filter-btn" data-filter="active">사용가능</button>
+                    <button class="filter-btn" data-filter="expiring">곧만료</button>
+                    <button class="filter-btn" data-filter="expired">만료됨</button>
+                </div>
+                <div class="platform-filter">
+                    <label for="platformSelect">플랫폼:</label>
+                    <select id="platformSelect" class="platform-select">
+                        <option value="all">전체 플랫폼</option>
+                        <option value="카카오톡 선물하기">🎁 카카오톡 선물하기</option>
+                        <option value="네이버페이">💰 네이버페이</option>
+                        <option value="토스">💳 토스</option>
+                        <option value="배달의민족">🍔 배달의민족</option>
+                        <option value="요기요">🚗 요기요</option>
+                        <option value="컬리">🛒 컬리</option>
+                        <option value="마켓컬리">🛒 마켓컬리</option>
+                        <option value="SSG">🏪 SSG</option>
+                        <option value="이마트몰">🏪 이마트몰</option>
+                        <option value="신세계몰">🏪 신세계몰</option>
+                        <option value="쿠팡">📦 쿠팡</option>
+                        <option value="11번가">11번가</option>
+                        <option value="G마켓">G마켓</option>
+                        <option value="옥션">옥션</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 기프트콘 목록 -->
+        <div class="gift-list" id="giftList">
+            <!-- 기프트콘 카드들이 여기에 동적으로 추가됩니다 -->
+        </div>
+
+        <!-- 빈 상태 -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-icon">🎁</div>
+            <h3>아직 등록된 기프트콘이 없습니다</h3>
+            <p>첫 번째 기프트콘을 추가해보세요!</p>
+        </div>
+    </div>
+
+    <!-- 기프트콘 추가/수정 모달 -->
+    <div id="giftModal" class="modal">
+        <div class="modal-content medium">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">기프트콘 추가</h2>
+            <form id="giftForm">
+                <div class="form-group">
+                    <label for="platform">플랫폼 *</label>
+                    <select id="platform" required>
+                        <option value="">선택해주세요</option>
+                        <option value="카카오톡 선물하기">🎁 카카오톡 선물하기</option>
+                        <option value="네이버페이">💰 네이버페이</option>
+                        <option value="토스">💳 토스</option>
+                        <option value="배달의민족">🍔 배달의민족</option>
+                        <option value="요기요">🚗 요기요</option>
+                        <option value="컬리">🛒 컬리</option>
+                        <option value="마켓컬리">🛒 마켓컬리</option>
+                        <option value="SSG">🏪 SSG</option>
+                        <option value="이마트몰">🏪 이마트몰</option>
+                        <option value="신세계몰">🏪 신세계몰</option>
+                        <option value="쿠팡">📦 쿠팡</option>
+                        <option value="11번가">11번가</option>
+                        <option value="G마켓">G마켓</option>
+                        <option value="옥션">옥션</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="brand">브랜드명 *</label>
+                    <input type="text" id="brand" placeholder="예: 스타벅스" required>
+                </div>
+                <div class="form-group">
+                    <label for="productName">상품명 *</label>
+                    <input type="text" id="productName" placeholder="예: 아메리카노 Tall" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="amount">금액 (원) *</label>
+                        <input type="number" id="amount" placeholder="5000" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiryDate">유효기간 *</label>
+                        <input type="date" id="expiryDate" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="barcode">바코드/쿠폰번호</label>
+                    <input type="text" id="barcode" placeholder="예: 1234567890 또는 ABC123DEF" maxlength="100">
+                    <div id="modal-barcode" style="margin-top: 12px; padding: 12px; background: #f0fdfc; border-radius: 8px; display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="memo">메모</label>
+                    <textarea id="memo" placeholder="추가 정보나 메모를 입력하세요..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="status">상태</label>
+                    <select id="status">
+                        <option value="active">사용 가능</option>
+                        <option value="used">사용 완료</option>
+                        <option value="expired">만료됨</option>
+                    </select>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-secondary" id="cancelBtn">취소</button>
+                    <button type="submit" class="btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase imports
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyC8dNohFcINgfc60c_NMr7R7d4i3gb5yTk",
+            authDomain: "newnew-a0dec.firebaseapp.com",
+            projectId: "newnew-a0dec",
+            storageBucket: "newnew-a0dec.firebasestorage.app",
+            messagingSenderId: "143901720991",
+            appId: "1:143901720991:web:e2f0cc71d182508e883daa",
+            measurementId: "G-4PL9KRT445"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // 전역으로 사용 가능하도록 설정
+        window.db = db;
+        window.FirebaseFirestore = { doc, setDoc, getDoc };
+        
+        // Firebase 함수들
+        async function setupFirebaseUser(user) {
+            try {
+                await FirebaseFirestore.setDoc(FirebaseFirestore.doc(db, 'users', user.uid), {
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    createdAt: new Date().toISOString()
+                }, { merge: true });
+            } catch (error) {
+                console.error('사용자 정보 저장 실패:', error);
+            }
+        }
+        
+        async function getOrCreateFamilyCode(uid) {
+            try {
+                const userDoc = await FirebaseFirestore.getDoc(FirebaseFirestore.doc(db, 'users', uid));
+                
+                if (userDoc.exists()) {
+                    const data = userDoc.data();
+                    if (data.familyCode) {
+                        return data.familyCode;
+                    }
+                }
+                
+                // 새로운 가족 코드 생성
+                const familyCode = generateFamilyCode();
+                await FirebaseFirestore.setDoc(FirebaseFirestore.doc(db, 'users', uid), {
+                    familyCode: familyCode
+                }, { merge: true });
+                
+                return familyCode;
+            } catch (error) {
+                console.error('가족 코드 생성 실패:', error);
+                return generateFamilyCode();
+            }
+        }
+        
+        function generateFamilyCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 6; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+        
+        // 전역 함수로 노출
+        window.setupFirebaseUser = setupFirebaseUser;
+        window.getOrCreateFamilyCode = getOrCreateFamilyCode;
+    </script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

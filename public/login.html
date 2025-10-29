@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - KEEPON</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <div class="logo-circle">
+                    <div class="gift-box">🎁</div>
+                </div>
+                <h1 class="login-title">KEEPON</h1>
+            </div>
+            
+            <div class="login-content">
+                <h2 class="login-welcome-title">로그인</h2>
+                
+                <div class="login-buttons">
+                    <!-- 첫 줄: 로그인 방법 선택 -->
+                    <div class="login-row">
+                        <button id="googleLoginBtn" class="login-btn-google">
+                            <span class="google-icon">🔵</span>
+                            구글 로그인
+                        </button>
+                        <button id="familyCodeBtn" class="login-btn-primary">
+                            가족코드 입력
+                        </button>
+                    </div>
+                    
+                    <!-- 두 번째 줄: 회원가입 -->
+                    <button id="googleSignUpBtn" class="login-btn-signup">
+                        <span class="google-icon">🔵</span>
+                        구글로 가입하기
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-external-footer">
+            <p class="login-footer-text">Keep your gifts on time.</p>
+            <p class="login-footer-tagline">❤️ 가족이 함께 쓰는 선물 지갑</p>
+        </div>
+    </div>
+    
+    <!-- 토스트 메시지 -->
+    <div id="toast" class="toast-message"></div>
+    
+    <!-- Firebase -->
+    <script type="module" src="login.js"></script>
+</body>
+</html>
+
