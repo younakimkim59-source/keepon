@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인 - KEEPON</title>
+    <title>KEEPON</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎁</text></svg>">
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts 제거 - 시스템 폰트 사용 -->
 </head>
 <body class="login-page">
     <div class="login-container">
@@ -49,6 +48,33 @@
         </div>
     </div>
     
+    <!-- 초대 수락 모달 -->
+    <div id="inviteModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎁 가족 지갑 초대</h2>
+                <span class="close" id="closeInviteModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="invite-info">
+                    <p>가족 지갑에 초대받았습니다!</p>
+                    <div class="invite-details">
+                        <div class="invite-item">
+                            <strong>초대자:</strong> <span id="inviteOwnerEmail">-</span>
+                        </div>
+                        <div class="invite-item">
+                            <strong>가족 코드:</strong> <span id="inviteFamilyCode">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="invite-actions">
+                    <button id="acceptInviteBtn" class="btn-primary">가족 지갑 입장하기</button>
+                    <button id="declineInviteBtn" class="btn-secondary">거절</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 토스트 메시지 -->
     <div id="toast" class="toast-message"></div>
     

@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KEEPON - 가족 선물 지갑</title>
+    <title>KEEPON</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎁</text></svg>">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -224,9 +225,7 @@
             form.innerHTML = `
                 <h3 style="margin:0 0 20px;color:#333;">가족 지갑 입장</h3>
                 <input type="text" id="familyCodeInput" placeholder="가족 코드 (6자)" maxlength="6" 
-                       style="width:100%;padding:12px;border:2px solid #e5e7eb;border-radius:8px;font-size:16px;text-transform:uppercase;margin-bottom:10px;">
-                <input type="email" id="ownerEmailInput" placeholder="가족 코드 주인 이메일" 
-                       style="width:100%;padding:12px;border:2px solid #e5e7eb;border-radius:8px;font-size:14px;margin-bottom:20px;">
+                       style="width:100%;padding:12px;border:2px solid #e5e7eb;border-radius:8px;font-size:16px;text-transform:uppercase;margin-bottom:20px;">
                 <div style="display:flex;gap:10px;">
                     <button id="submitCode" style="flex:1;padding:12px;background:#00C9A7;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">입장</button>
                     <button id="cancelCode" style="flex:1;padding:12px;background:#f0f0f0;border:none;border-radius:8px;cursor:pointer;">취소</button>
@@ -246,15 +245,9 @@
         
         async function handleFamilyCodeSubmit(modal) {
             const code = modal.querySelector('#familyCodeInput').value.trim().toUpperCase();
-            const ownerEmail = modal.querySelector('#ownerEmailInput').value.trim();
             
-            if (!code || code.length < 6) {
+            if (!code || code.length !== 6) {
                 showToast('가족 코드는 6자여야 합니다.', 'warning');
-                return;
-            }
-            
-            if (!ownerEmail) {
-                showToast('가족 코드 주인의 이메일을 입력해주세요.', 'warning');
                 return;
             }
             
@@ -265,23 +258,18 @@
                 const { getFirestore, collection, query, where, getDocs } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
                 const db = getFirestore(app);
                 
-                const q = query(collection(db, 'users'), where('familyCode', '==', code));
+                const q = query(collection(db, 'users'), where('familyCode', '==', code), where('isCodeOwner', '==', true));
                 const querySnapshot = await getDocs(q);
                 
                 if (!querySnapshot.empty) {
-                    const userDoc = querySnapshot.docs[0];
-                    const userData = userDoc.data();
+                    const ownerDoc = querySnapshot.docs[0];
+                    const ownerData = ownerDoc.data();
                     
-                    // 이메일 확인
-                    if (userData.email.toLowerCase() !== ownerEmail.toLowerCase()) {
-                        showToast('이메일이 일치하지 않습니다.', 'error');
-                        return;
-                    }
-                    
-                    // 가족 지갑 입장 정보 저장
+                    // 가족 지갑 입장 정보 저장 (브라우저 로컬스토리지만 사용)
                     localStorage.setItem('familyCode', code);
-                    localStorage.setItem('familyOwnerEmail', ownerEmail);
+                    localStorage.setItem('ownerEmail', ownerData.email);
                     localStorage.setItem('isFamilyMember', 'true');
+                    localStorage.setItem('loginMethod', 'familyCode'); // 로그인 방식 저장
                     
                     showToast('가족 지갑에 입장합니다...', 'success');
                     setTimeout(() => {

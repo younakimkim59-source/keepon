@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 가족 코드 기반 사용자 문서
+    match /users/{userId} {
+      // 읽기: 모든 사용자 (가족 코드 검증용)
+      allow read: if true;
+      
+      // 생성/수정/삭제: 인증된 사용자만
+      allow create, update, delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // 초대 토큰
+    match /invites/{inviteId} {
+      // 읽기: 모든 사용자
+      allow read: if true;
+      
+      // 생성/수정/삭제: 인증된 사용자만
+      allow create, update, delete: if request.auth != null;
+    }
+    
+    // 기프트콘 - 가족 코드 기반
+    match /gifts/{giftId} {
+      // 읽기/쓰기: 모든 사용자 (가족 코드로 필터링)
+      allow read, write: if true;
+    }
+    
+    // 가족별 기프트콘 컬렉션
+    match /families/{familyCode}/gifts/{giftId} {
+      // 읽기/쓰기: 모든 사용자 (가족 코드로 필터링)
+      allow read, write: if true;
+    }
+  }
+}
+
